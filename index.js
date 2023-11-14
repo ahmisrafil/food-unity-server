@@ -54,6 +54,27 @@ async function run() {
         })
 
 
+        // add food request data to database
+        const requestCollection = client.db("foodDB").collection("request");
+        app.post('/request', async (req, res) => {
+            const newRequest = req.body;
+            console.log(newRequest);
+            const result = await requestCollection.insertOne(newRequest);
+            res.send(result);
+        })
+
+        //read food data from database
+        app.get('/request', async (req, res) => {
+            const cursor = requestCollection.find();
+            const result = await cursor.toArray();
+            res.send(result);
+        })
+
+
+
+
+
+
 
 
         // Send a ping to confirm a successful connection
