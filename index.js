@@ -46,9 +46,9 @@ async function run() {
 
 
         //read data of a specific id
-        app.get('/food/:id', async(req, res)=>{
+        app.get('/food/:id', async (req, res) => {
             const id = req.params.id;
-            const query ={_id : new ObjectId(id)};
+            const query = { _id: new ObjectId(id) };
             const food = await foodCollection.findOne(query);
             res.send(food);
         })
@@ -63,13 +63,20 @@ async function run() {
             res.send(result);
         })
 
-        //read food data from database
+        //read food request data from database
         app.get('/request', async (req, res) => {
             const cursor = requestCollection.find();
             const result = await cursor.toArray();
             res.send(result);
         })
 
+        // delete a  food request from db
+        app.delete('/request/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: new ObjectId(id) };
+            const result = await requestCollection.deleteOne(query);
+            res.send(result);
+        })
 
 
 
